@@ -1,0 +1,27 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Затемнення фону */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001; /* Забезпечує, що модальне вікно завжди буде поверх інших елементів */
+}
+
+.modal {
+  max-width: 80%; /* Максимальна ширина модального вікна */
+  background: #fff; /* Колір фону модального вікна */
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Тінь модального вікна */
+  text-align: center;
+}
+
+.photo {
+  max-width: 100%; /* Зробити зображення адаптивним до розміру модального вікна */
+  max-height: 80vh; /* Максимальна висота зображення (80% від висоти вікна) */
+  object-fit: contain; /* Зображення вписується в розмір вікна і зберігає пропорції */
+}

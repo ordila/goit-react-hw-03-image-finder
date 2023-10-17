@@ -6,7 +6,6 @@ import css from './styles.module.css';
 import React, { Component } from 'react';
 import Button from './Button/Button';
 import ImageGallery from './ImageGallery/ImageGallery';
-import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 export default class App extends Component {
   state = {
@@ -22,11 +21,7 @@ export default class App extends Component {
   };
 
   onModalOpen = imageUrl => {
-    const instance = basicLightbox.create(`
-      <img src="${imageUrl}" width="800" height="600">
-    `);
-
-    instance.show();
+    this.setState({ modal: { modalOpen: true, modalData: imageUrl } });
   };
 
   fetchPosts = async () => {
@@ -70,8 +65,15 @@ export default class App extends Component {
     }));
     console.log(this.state.page);
   };
+  onModalClose = () => {
+    this.setState({ modal: { modalOpen: false } });
+  };
   render() {
-    const { posts, isLoading } = this.state;
+    const {
+      posts,
+      isLoading,
+      modal: { modalData, modalOpen },
+    } = this.state;
     return (
       <div className={css.App}>
         <Searchbar onFormSubmit={this.onFormSubmit}></Searchbar>
@@ -86,7 +88,7 @@ export default class App extends Component {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              height: '100vh', // За замовчуванням сторінка повністю займає висоту вікна
+              height: '100vh',
             }}
           >
             <Triangle
@@ -103,7 +105,9 @@ export default class App extends Component {
         {posts.length > 1 && (
           <Button onButtonClick={this.onButtonClick}></Button>
         )}
-        <Modal></Modal>
+        {modalOpen && (
+          <Modal onModalClose={this.onModalClose} modalData={modalData}></Modal>
+        )}
       </div>
     );
   }
